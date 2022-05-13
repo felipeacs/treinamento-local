@@ -1,0 +1,14 @@
+input {
+  stdin {
+    id => "my_plugin_id"
+  }
+}
+output {
+    elasticsearch {
+        index => "meu-index-local"
+        hosts => ["http://localhost:9200"]
+        user => "elastic"
+        password => "changeme"
+    }
+    #stdout {}
+}
