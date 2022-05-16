@@ -1,0 +1,52 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "search_type": "query_then_fetch",
+        "indices": [
+          "index-mysql*"
+        ],
+        "rest_total_hits_as_int": true,
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "match": {
+                    "status": 0
+                  }
+                },
+                {
+                  "match": {
+                    "priority": 0
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 0
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "level": "info",
+        "text": "Alerta de prioridade de tasks"
+      }
+    }
+  }
+}
